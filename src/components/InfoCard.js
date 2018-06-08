@@ -5,7 +5,7 @@ const Container = glamorous.div({
       width: '95vw',
       display:'grid',
       grid:'60px / 60px 4fr 6fr',
-      boxShadow: '0 0 2px 2px #ccc',
+      boxShadow: '0 0 2px 2px #eee',
       borderRadius:'5px',
       background: 'white',
       margin:'3px',
@@ -14,10 +14,10 @@ const Container = glamorous.div({
       }
 });
 const Info = glamorous('div',{propsAreCssOverrides:true})({
-            width: '35px',
-            height: '35px',
-            borderRadius: '50%',
-            backgroundColor: 'black',
+      width: '35px',
+      height: '35px',
+      borderRadius: '50%',
+      backgroundColor: 'black',
 })
 const FlexBox = glamorous.div({
       width:'100%',
@@ -47,7 +47,7 @@ const InfoCard = (props)=>{
                                     <FlexBox>89</FlexBox>
                                     <FlexBox>SYS</FlexBox>
                                     <FlexBox>DIA</FlexBox>
-                                    <FlexBox>PUL</FlexBox>
+                                    <FlexBox>BPS</FlexBox>
                         </InnerContainer>
                         </div>
                  </FlexBox>
