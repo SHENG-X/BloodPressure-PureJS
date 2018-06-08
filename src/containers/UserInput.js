@@ -1,8 +1,7 @@
 import glamorous from 'glamorous';
 import {css} from 'glamor'
 import React, {Component} from 'react';
-import {TextField, Button, withStyles} from '@material-ui/core';
-import transitions from '@material-ui/core/styles/transitions';
+import {TextField, Button, withStyles, SvgIcon} from '@material-ui/core';
 
 
 const Container = glamorous('div', {propsAreCssOverrides: true})({
@@ -83,11 +82,17 @@ class UserInput extends Component{
       render(){
             const { classes } = this.props;
             return(
+                  <div>
                   <Container>
                         <InnerContainer>
                               <form>
                                     <InputContainer>
-                                          <div>@</div>
+                                          <SvgIcon style={{width:'45px',height:'45px', opacity:'0.4'}}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                      <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/>
+                                                      <path d="M0 0h24v24H0z" fill="none"/>
+                                                </svg>
+                                          </SvgIcon>
                                     </InputContainer>
                                     <InputContainer>
                                           <input type='number' placeholder='systolic'/>
@@ -104,6 +109,15 @@ class UserInput extends Component{
                               </form>
                         </InnerContainer>
                   </Container>
+                   <div style={{position:'fixed', bottom:'20px', textAlign:'center',left:'0px', width:'100%'}}>
+                              <SvgIcon style={{background:'#ccc', display:'none', width:'45px', height:'45px', borderRadius:'50%',opacity:0.5}}>   
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                          <path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/>
+                                          <path d="M0 0h24v24H0z" fill="none"/>
+                                    </svg>
+                              </SvgIcon>
+                  </div>
+            </div>            
             );
       }
 }

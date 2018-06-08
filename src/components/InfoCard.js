@@ -9,7 +9,7 @@ const Container = glamorous.div({
       borderRadius:'5px',
       background: 'white',
       margin:'3px',
-      ':hover':{
+      ':active':{
             transform: 'scale(1.02)'
       }
 });
