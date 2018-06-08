@@ -4,17 +4,18 @@ import React from 'react';
 const Container = glamorous.div({
       width: '95vw',
       display:'grid',
-      grid:'50px / 50px 4fr 6fr',
-      boxShadow: '0 0 2px 2px black',
-      background:'white',
-      margin:'5px',
+      grid:'60px / 60px 4fr 6fr',
+      boxShadow: '0 0 2px 2px #ccc',
+      borderRadius:'5px',
+      background: 'white',
+      margin:'3px',
       ':hover':{
             transform: 'scale(1.02)'
       }
 });
 const Info = glamorous('div',{propsAreCssOverrides:true})({
-            width: '30px',
-            height: '30px',
+            width: '35px',
+            height: '35px',
             borderRadius: '50%',
             backgroundColor: 'black',
 })
@@ -24,6 +25,7 @@ const FlexBox = glamorous.div({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      textAlign:'center'
 
 });
 const InnerContainer = glamorous.div({
@@ -36,7 +38,7 @@ const InfoCard = (props)=>{
      return(
            <Container>
                  <FlexBox><Info  {...props}/></FlexBox>
-                 <FlexBox>2018/09/12</FlexBox>
+                 <FlexBox style={{fontSize:'1.5em'}}>2018/09/12</FlexBox>
                  <FlexBox>
                         <div style={{width:'80%'}}>
                               <InnerContainer>

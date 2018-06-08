@@ -14,10 +14,12 @@ import React from 'react';
 const Container = glamorous('div', {propsAreCssOverrides: true})({
       display: 'flex',
       width: '100vw',
-      height: '100vh',
       flexDirection: 'column',
       alignItems:'center',
-      background: '#eee'
+      backgroundColor: '',
+      paddingTop:'10px',
+      overflow:'scroll',
+      flexGrow:10
 })
 const ListView = (props)=>{
       return(
