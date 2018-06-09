@@ -22,7 +22,6 @@ class App extends Component {
   render() {
     const list = [< InfoCard/>,< InfoCard/>, <InfoCard/>,< InfoCard/>,< InfoCard/>,< InfoCard/>,< InfoCard/>,< InfoCard/>,< InfoCard/>,< InfoCard/>,< InfoCard backgroundColor={'yellow'}/>];
     return (
-      // <div>
       <APPContainer>
         <NavBar/>
         <Main>
@@ -30,7 +29,6 @@ class App extends Component {
           < UserInput/>
         </Main>  
       </APPContainer>  
-      // </div>
     );
   }
 }

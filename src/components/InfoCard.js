@@ -45,7 +45,7 @@ const InfoCard = (props)=>{
                                     <FlexBox>88</FlexBox>
                                     <FlexBox>128</FlexBox>
                                     <FlexBox>89</FlexBox>
-                                    <FlexBox>SYS</FlexBox>
+                                    <FlexBox >SYS</FlexBox>
                                     <FlexBox>DIA</FlexBox>
                                     <FlexBox>BPS</FlexBox>
                         </InnerContainer>

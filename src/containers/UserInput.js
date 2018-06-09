@@ -76,7 +76,7 @@ class UserInput extends Component{
             super(props);
             this.state={
                   container_display:'',
-                  show_container_button: 'none'
+                  show_container_button: 'none',
             }
       }
       container_display_handler(){
