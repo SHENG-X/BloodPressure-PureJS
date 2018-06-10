@@ -75,11 +75,11 @@ const InputContainer = glamorous.div({
 
 const mapStateToProps = (state) => {
       return{
-            'systolic': state.systolic,
-            'diastolic':state.diastolic,
-            'pulse':state.pulse,
-            'container_display': state.container_display,
-            'show_container_button': state.show_container_button
+            'systolic': state.setInput.systolic,
+            'diastolic': state.setInput.diastolic,
+            'pulse': state.setInput.pulse,
+            'container_display': state.setInput.container_display,
+            'show_container_button': state.setInput.show_container_button,
       }
 }
  
@@ -90,7 +90,7 @@ const mapDispatchToProps = (dispatch) => {
             onPulseChange: (event) => dispatch(enter_pulse(event.target.value)),
             onContainerControlClick: () => dispatch(show_hide_input_container()),
             onButtonControlClick: () => dispatch(show_hide_container_control_button()),
-            onSubmit: ()=>dispatch(save_data())
+            onSubmit: ()=>dispatch(save_data()),
       }
 }
 

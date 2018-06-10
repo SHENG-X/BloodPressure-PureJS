@@ -38,13 +38,13 @@ const InfoCard = (props)=>{
      return(
            <Container>
                  <FlexBox><Info  {...props}/></FlexBox>
-                 <FlexBox style={{fontSize:'1.5em'}}>2018/09/12</FlexBox>
+                 <FlexBox style={{fontSize:'1.5em'}}>{props.ID}</FlexBox>
                  <FlexBox>
                         <div style={{width:'80%'}}>
                               <InnerContainer>
-                                    <FlexBox>88</FlexBox>
-                                    <FlexBox>128</FlexBox>
-                                    <FlexBox>89</FlexBox>
+                                    <FlexBox>{props.systolic}</FlexBox>
+                                    <FlexBox>{props.diastolic}</FlexBox>
+                                    <FlexBox>{props.pulse}</FlexBox>
                                     <FlexBox >SYS</FlexBox>
                                     <FlexBox>DIA</FlexBox>
                                     <FlexBox>BPS</FlexBox>

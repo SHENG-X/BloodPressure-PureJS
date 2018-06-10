@@ -1,5 +1,8 @@
 import glamorous from 'glamorous';
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {get_user_data} from './UserInput/actions';
+import InfoCard from '../components/InfoCard'
 
 
 // const Container = glamorous.div(props =>({
@@ -21,14 +24,39 @@ const Container = glamorous('div', {propsAreCssOverrides: true})({
       overflow:'scroll',
       flexGrow:10
 })
-const ListView = (props)=>{
-      return(
-            <Container {...props}>
-                  {
-                        props.children
-                  }
-            </Container>
-      )
+
+
+const mInfo = [];
+const mapStateToProps = (state) => {
+      return{
+            'data':state.fetchData
+      }
+}
+ 
+const mapDispatchToProps = (dispatch) => {
+      return{
+            onGetUserData: ()=>dispatch(get_user_data())
+      }
 }
 
-export default ListView;
+class ListView extends Component{
+      componentWillMount(){
+        this.props.onGetUserData();
+      }
+      
+      render(){
+            var info = this.props.data;
+            if(info.length>0){
+                  info.forEach(val => mInfo.push(val));
+            }
+            return(
+                  <Container>
+                        {mInfo.map((val) =>  <InfoCard key={val['ID']} {...val}/>)}
+                  </Container>
+            )
+
+}
+      
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListView);

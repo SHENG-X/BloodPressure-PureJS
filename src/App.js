@@ -19,16 +19,28 @@ const Main = glamorous.div({
   flexDirection: 'column',
   alignItems:'center'
 });
+
+
+
+// const mapStateToProps = (state) => {
+//       return{
+//             'data': state.fetchData.data
+//       }
+// }
+ 
+// const mapDispatchToProps = (dispatch) => {
+//       return{
+//               onGetUserData: () => dispatch(request_data())
+//             }
+// }
 class App extends Component {
-  
+
   render() {
-    const userData =[{'date':'2018/05/07', },{}];
-    const list = [< InfoCard/>,< InfoCard/>, <InfoCard/>,< InfoCard/>,< InfoCard/>,< InfoCard/>,< InfoCard/>,< InfoCard/>,< InfoCard/>,< InfoCard/>,< InfoCard backgroundColor={'yellow'}/>];
     return (
       <APPContainer>
         <NavBar/>
         <Main>
-          < ListView children={list}/>
+          < ListView/>
           < UserInput/>
         </Main>  
       </APPContainer>  

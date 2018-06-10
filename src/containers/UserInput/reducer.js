@@ -1,4 +1,11 @@
-import {ENTER_SISTOLIC, ENTER_DIASTOLIC, ENTER_PULSE, SHOW_HIDE_CONTAINER_CONTROL_BUTTON, SHOW_HIDE_INPUT_CONTAINER, SAVE_USER_DATA} from './constants';
+import {ENTER_SISTOLIC, ENTER_DIASTOLIC, ENTER_PULSE, REQUEST_DATA, SHOW_HIDE_CONTAINER_CONTROL_BUTTON, GET_USER_DATA, SHOW_HIDE_INPUT_CONTAINER, SAVE_USER_DATA} from './constants';
+import Joi from 'joi';
+const schema = {
+      systolic:Joi.number().required(),
+      diastolic: Joi.number().required(),
+      pulse: Joi.number().required()
+};
+
 const initialState = {
       diastolic: '',
       systolic: '',
@@ -7,6 +14,9 @@ const initialState = {
       show_container_button: 'none',
 }
 
+const appDataState={
+      data: [] 
+}
 
 export const setInput = (state = initialState, action = {}) => {
       console.log(action.type);
@@ -26,9 +36,61 @@ export const setInput = (state = initialState, action = {}) => {
                   // key (ID)==> time
                   // Only save systolic/diastolic/pulse
                   // check user input if input is valid
-                  console.log(state.systolic, state.diastolic, state.pulse, Date.now());
-                  return initialState;
+                  const result = Joi.validate({'systolic': state.systolic, 'diastolic': state.diastolic, 'pulse': state.pulse}, schema);
+                  if(result.error){
+                        console.log(result.error.details[0].message);
+                        alert(result.error.details[0].message);
+                  }else{
+                        if (!window.indexedDB) {
+                              window.alert("Your browser doesn't support a stable version of IndexedDB. This app requires IndexedDB to work properly.");
+                        }
+                        else{
+                              var db = null;
+                              const request = window.indexedDB.open('health', 1);
+                              request.onerror = (event) => {
+                                    alert('IndexedDB is required for the application');
+                              }
+                              request.onsuccess = (event) =>{
+                                    db = event.target.result;
+                                    if(db){
+                                          var transaction = db.transaction(['health'],'readwrite');
+                                          var objectStore = transaction.objectStore('health');
+                                          let dataID = Date.now();
+                                          var req = objectStore.add({'systolic': state.systolic, 'diastolic': state.diastolic, 'pulse': state.pulse, 'ID':dataID});
+                                          appDataState.data.push({'systolic': state.systolic, 'diastolic': state.diastolic, 'pulse': state.pulse, 'ID':dataID});
+                                          console.log('App data state: ', appDataState);
+                                    }   
+                              }
+                              request.onupgradeneeded = function(event) { 
+                                    var db = event.target.result;
+                                    var objectStore = db.createObjectStore("health", { keyPath: "ID" });
+                                    objectStore.transaction.oncomplete = (event) =>{
+                                          var clientObjectStore = db.transaction("health", "readwrite").objectStore("health");
+                                          let dataID = Date.now();
+                                          clientObjectStore.add({'systolic': state.systolic, 'diastolic': state.diastolic, 'pulse': state.pulse, 'ID':dataID});
+                                          appDataState.data.push({'systolic': state.systolic, 'diastolic': state.diastolic, 'pulse': state.pulse, 'ID':dataID})
+                                          console.log('App data state: ', appDataState);
+                                    }
+                              };
+                              console.log(state.systolic, state.diastolic, state.pulse, Date.now());
+                              return initialState;
+                        }
+                        
+                  }
+                  
             default:
                   return state;
+      }
+}
+
+export const fetchData = (state = appDataState, action = {}) => {
+      switch(action.type){
+            case GET_USER_DATA:
+                  action.payload.forEach(val => appDataState.data.push(val));
+                  return appDataState.data;
+            case REQUEST_DATA:
+                  return appDataState.data;
+            default:
+                  return appDataState;
       }
 }
