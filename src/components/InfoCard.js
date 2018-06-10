@@ -61,7 +61,7 @@ const getColor = (props)=>{
       else if (props['systolic'] >= 140 && props['diastolic'] >= 90) {
             //stage two high
             console.log('stage 2 high');
-            color = '#F44336';
+            color = '#ff6d00';
 
       }
       else{

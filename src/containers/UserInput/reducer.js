@@ -11,7 +11,7 @@ import {
 import Joi from 'joi';
 const schema = {
       systolic:Joi.number().positive().min(40).max(250).required(),
-      diastolic: Joi.number().positive().min(40).max(250).required(),
+      diastolic: Joi.number().positive().min(40).max(Joi.ref('systolic')).required(),
       pulse: Joi.number().positive().required()
 };
 
