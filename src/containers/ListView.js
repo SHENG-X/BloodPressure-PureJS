@@ -26,7 +26,6 @@ const Container = glamorous('div', {propsAreCssOverrides: true})({
 })
 
 
-const mInfo = [];
 const mapStateToProps = (state) => {
       console.log('state value', state.setInput.data);
       return{
@@ -45,9 +44,10 @@ class ListView extends Component{
         this.props.onGetUserData();
       }
       handleClick(e){
-            if(e.target.id.length>0){
-                  alert(e.target.id);
-            }
+            console.log(e.target)
+            alert(e.target.id);
+            //Click color indicator to delete
+            
       }
       render(){
             let info=[];
@@ -55,7 +55,7 @@ class ListView extends Component{
             console.log('mpropsss info',info);
             return(
                   <Container>
-                        {this.props.data['data'].map((val) =>  <InfoCard key={val['ID']} id={val['ID']} {...val} onclick={this.handleClick.bind(this)}/>)}
+                        {this.props.data['data'].map((val) =>  <InfoCard key={val['ID']} id={val['ID']} {...val} click={this.handleClick.bind(this)} />)}
                   </Container>
             )
 

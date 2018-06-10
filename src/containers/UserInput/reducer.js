@@ -1,4 +1,4 @@
-import {ENTER_SISTOLIC, ENTER_DIASTOLIC, ENTER_PULSE, REQUEST_DATA, SHOW_HIDE_CONTAINER_CONTROL_BUTTON, GET_USER_DATA, SHOW_HIDE_INPUT_CONTAINER, SAVE_USER_DATA} from './constants';
+import {ENTER_SISTOLIC, ENTER_DIASTOLIC, ENTER_PULSE, SHOW_HIDE_CONTAINER_CONTROL_BUTTON, GET_USER_DATA, SHOW_HIDE_INPUT_CONTAINER, SAVE_USER_DATA} from './constants';
 import Joi from 'joi';
 const schema = {
       systolic:Joi.number().required(),
@@ -15,9 +15,6 @@ const initialState = {
       data:[]
 }
 
-// const appDataState={
-//       data: [] 
-// }
 
 export const setInput = (state = initialState, action = {}) => {
       console.log(action.type);
@@ -71,7 +68,6 @@ export const setInput = (state = initialState, action = {}) => {
                                     objectStore.transaction.oncomplete = (event) =>{
                                           var clientObjectStore = db.transaction("health", "readwrite").objectStore("health");
                                           clientObjectStore.add({'systolic': state.systolic, 'diastolic': state.diastolic, 'pulse': state.pulse, 'ID':dataID});
-                                          let holder = state.data;
                                           console.log('App data state: ', state.data);
                                     }
                               };
@@ -83,20 +79,8 @@ export const setInput = (state = initialState, action = {}) => {
                         }
                         
                   }
-                  
             default:
                   return state;
       }
 }
 
-// export const fetchData = (state = appDataState, action = {}) => {
-//       switch(action.type){
-//             case GET_USER_DATA:
-//                   action.payload.forEach(val => appDataState.data.push(val));
-//                   return appDataState.data;
-//             case REQUEST_DATA:
-//                   return appDataState.data;
-//             default:
-//                   return appDataState;
-//       }
-// }

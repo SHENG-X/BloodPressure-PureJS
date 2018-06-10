@@ -13,9 +13,9 @@ const Container = glamorous.div({
             transform: 'scale(1.02)'
       }
 });
-const Info = glamorous('div',{propsAreCssOverrides:true})({
-      width: '35px',
-      height: '35px',
+const Info = glamorous('div', {propsAreCssOverrides:true})({
+      width: '30px',
+      height: '30px',
       borderRadius: '50%',
       backgroundColor: 'black',
 })
@@ -34,22 +34,53 @@ const InnerContainer = glamorous.div({
       display: 'grid',
       grid: '10% 10% / 33% 33% 33%',
 });
+const getColor = (props)=>{
+      var color;
+      if (props['systolic'] < 120 && props['diastolic'] < 80) {
+            //normal
+            console.log('normall');
+            color = '#8BC34A';
 
+      }
+      else if (props['systolic'] >= 120 && props['systolic'] <= 129 && props['diastolic'] <= 80) {
+            //elavated
+            console.log('elavated');
+            color = '#FFC107';
+
+      }
+      else if (props['systolic'] >= 130 && props['systolic'] <= 139 && props['diastolic'] > 80 && props['diastolic'] <= 89) {
+            //stage one high
+            console.log('stage 1 high');
+            color = '#FFCDD2';
+
+      }
+      else if (props['systolic'] >= 140 && props['diastolic'] >= 90) {
+            //stage two high
+            console.log('stage 2 high');
+            color = '#F44336';
+
+      }
+      else{
+            color = 'black';
+      }
+      return color;
+}
 const InfoCard = (props)=>{
      const date =new Date(props.ID);
+     let colorSchema = getColor(props);
      return(
-           <Container id={props.id} onClick={(e)=>props.onclick(e)}>
-                 <FlexBox><Info  {...props}/></FlexBox>
-                 <FlexBox style={{fontSize:'1.5em'}}>{date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate()}</FlexBox>
-                 <FlexBox>
-                        <div style={{width:'80%'}}>
-                              <InnerContainer>
-                                    <FlexBox>{props.systolic}</FlexBox>
-                                    <FlexBox>{props.diastolic}</FlexBox>
-                                    <FlexBox>{props.pulse}</FlexBox>
-                                    <FlexBox >SYS</FlexBox>
-                                    <FlexBox>DIA</FlexBox>
-                                    <FlexBox>BPS</FlexBox>
+           <Container id={props.id} onClick={(e) => props.click(e)}>
+                 <FlexBox id={props.id}><Info id={props.id} backgroundColor={colorSchema}/></FlexBox>
+                 <FlexBox id={props.id} style={{fontSize:'1.5em'}}>{date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate()}</FlexBox>
+                 <FlexBox id={props.id}>
+                        <div style={{width:'80%'}} id={props.id}>
+                              <InnerContainer id={props.id} >
+                                    <FlexBox id={props.id}>{props.systolic}</FlexBox>
+                                    <FlexBox id={props.id}>{props.diastolic}</FlexBox>
+                                    <FlexBox id={props.id}>{props.pulse}</FlexBox>
+                                    <FlexBox id={props.id} >SYS</FlexBox>
+                                    <FlexBox id={props.id}>DIA</FlexBox>
+                                    <FlexBox id={props.id}>BPS</FlexBox>
                         </InnerContainer>
                         </div>
                  </FlexBox>

@@ -5,7 +5,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
-import {setInput, fetchData} from './containers/UserInput/reducer';
+import {setInput} from './containers/UserInput/reducer';
 import thunk from 'redux-thunk';
 
 

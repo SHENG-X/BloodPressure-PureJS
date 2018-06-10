@@ -2,7 +2,6 @@ import {
       ENTER_SISTOLIC,
       ENTER_DIASTOLIC,
       ENTER_PULSE,
-      REQUEST_DATA,
       SHOW_HIDE_INPUT_CONTAINER,
       GET_USER_DATA,
       SHOW_HIDE_CONTAINER_CONTROL_BUTTON,
@@ -42,7 +41,7 @@ export const get_user_data = ()=>(dispatch) => {
             db = event.target.result;
             var objectStore = db.createObjectStore("health", { keyPath: "ID" });
             objectStore.transaction.oncomplete = (event) =>{
-                  var clientObjectStore = db.transaction("health", "readwrite").objectStore("health");
+            db.transaction("health", "readwrite").objectStore("health");
             }
       };
       // request.onerror = function(event) {
@@ -61,9 +60,4 @@ export const get_user_data = ()=>(dispatch) => {
       }
       };
 
-}
-
-
-export const request_data = () =>{
-      type: REQUEST_DATA
 }
