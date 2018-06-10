@@ -3,7 +3,7 @@ import {css} from 'glamor'
 import React, {Component} from 'react';
 import { SvgIcon} from '@material-ui/core';
 import { connect } from 'react-redux';
-import {enter_diastolic, enter_pulse, enter_systolic, show_hide_input_container, show_hide_container_control_button} from './actions';
+import {enter_diastolic, enter_pulse, enter_systolic, show_hide_input_container, show_hide_container_control_button, save_data} from './actions';
 
 const Container = glamorous('div', {propsAreCssOverrides: true})({
       width:'100vw',
@@ -80,7 +80,6 @@ const mapStateToProps = (state) => {
             'pulse':state.pulse,
             'container_display': state.container_display,
             'show_container_button': state.show_container_button
-
       }
 }
  
@@ -90,28 +89,13 @@ const mapDispatchToProps = (dispatch) => {
             onDiastolicChange: (event) => dispatch(enter_diastolic(event.target.value)),
             onPulseChange: (event) => dispatch(enter_pulse(event.target.value)),
             onContainerControlClick: () => dispatch(show_hide_input_container()),
-            onButtonControlClick: () => dispatch(show_hide_container_control_button())
+            onButtonControlClick: () => dispatch(show_hide_container_control_button()),
+            onSubmit: ()=>dispatch(save_data())
       }
 }
 
 
-
-
-
 class UserInput extends Component{
-      // constructor(props){
-      //       super(props);
-      //       this.state={
-      //             container_display:'',
-      //             show_container_button: 'none',
-      //       }
-      // }
-      // container_display_handler(){
-      //       this.setState({container_display:'none', show_container_button:''});
-      // }
-      // show_container_button(){
-      //       this.setState({show_container_button:'none', container_display:''});
-      // }
       render(){
             return(
                   <div>
@@ -127,16 +111,16 @@ class UserInput extends Component{
                                           </SvgIcon>
                                     </InputContainer>
                                     <InputContainer>
-                                          <input type='number' placeholder='systolic' onChange = {this.props.onSystolicChange}/>
+                                          <input type='number' placeholder='systolic' value={this.props.systolic} onChange = {this.props.onSystolicChange}/>
                                     </InputContainer>
                                     <InputContainer>
-                                          <input type='number' placeholder='diastolic' onChange = {this.props.onDiastolicChange}/>
+                                          <input type='number' placeholder='diastolic'  value={this.props.diastolic} onChange = {this.props.onDiastolicChange}/>
                                     </InputContainer>
                                     <InputContainer>
-                                          <input type='number' placeholder='pulse' onChange = {this.props.onPulseChange}/>
+                                          <input type='number' placeholder='pulse'  value={this.props.pulse} onChange = {this.props.onPulseChange}/>
                                     </InputContainer>
                                     <InputContainer>
-                                          <input type='button' value='SUBMIT' />
+                                          <input type='button' value='SUBMIT' onClick={this.props.onSubmit}/>
                                     </InputContainer>
                               </form>
                         </InnerContainer>

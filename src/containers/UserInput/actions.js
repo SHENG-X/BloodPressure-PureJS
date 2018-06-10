@@ -1,4 +1,4 @@
-import {ENTER_SISTOLIC, ENTER_DIASTOLIC, ENTER_PULSE, SHOW_HIDE_INPUT_CONTAINER, SHOW_HIDE_CONTAINER_CONTROL_BUTTON} from './constants';
+import {ENTER_SISTOLIC, ENTER_DIASTOLIC, ENTER_PULSE, SHOW_HIDE_INPUT_CONTAINER, SHOW_HIDE_CONTAINER_CONTROL_BUTTON, SAVE_USER_DATA} from './constants';
 export const enter_systolic = (text) =>({
       type: ENTER_SISTOLIC,
       payload: text
@@ -21,3 +21,7 @@ export const show_hide_input_container = ()=>({
 export const show_hide_container_control_button = () => ({
       type: SHOW_HIDE_CONTAINER_CONTROL_BUTTON
 });
+
+export const save_data = () =>({
+      type: SAVE_USER_DATA
+})
