@@ -34,11 +34,13 @@ const InnerContainer = glamorous.div({
       display: 'grid',
       grid: '10% 10% / 33% 33% 33%',
 });
+
 const InfoCard = (props)=>{
+     const date =new Date(props.ID);
      return(
-           <Container>
+           <Container id={props.id} onClick={(e)=>props.onclick(e)}>
                  <FlexBox><Info  {...props}/></FlexBox>
-                 <FlexBox style={{fontSize:'1.5em'}}>{props.ID}</FlexBox>
+                 <FlexBox style={{fontSize:'1.5em'}}>{date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate()}</FlexBox>
                  <FlexBox>
                         <div style={{width:'80%'}}>
                               <InnerContainer>

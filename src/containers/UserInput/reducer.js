@@ -12,11 +12,12 @@ const initialState = {
       pulse: '',
       container_display: '',
       show_container_button: 'none',
+      data:[]
 }
 
-const appDataState={
-      data: [] 
-}
+// const appDataState={
+//       data: [] 
+// }
 
 export const setInput = (state = initialState, action = {}) => {
       console.log(action.type);
@@ -31,11 +32,16 @@ export const setInput = (state = initialState, action = {}) => {
                   return {...state, container_display:'none',show_container_button:''};
             case SHOW_HIDE_CONTAINER_CONTROL_BUTTON:
                   return {...state, container_display:'',show_container_button:'none'};
+            case GET_USER_DATA:
+                  let holder = state.data;
+                  action.payload.forEach(val => holder.push(val));
+                  return {...state, data:holder};
             case SAVE_USER_DATA:
                   // Save data to indexed db From here
                   // key (ID)==> time
                   // Only save systolic/diastolic/pulse
                   // check user input if input is valid
+                  var dataID = Date.now();
                   const result = Joi.validate({'systolic': state.systolic, 'diastolic': state.diastolic, 'pulse': state.pulse}, schema);
                   if(result.error){
                         console.log(result.error.details[0].message);
@@ -55,25 +61,25 @@ export const setInput = (state = initialState, action = {}) => {
                                     if(db){
                                           var transaction = db.transaction(['health'],'readwrite');
                                           var objectStore = transaction.objectStore('health');
-                                          let dataID = Date.now();
-                                          var req = objectStore.add({'systolic': state.systolic, 'diastolic': state.diastolic, 'pulse': state.pulse, 'ID':dataID});
-                                          appDataState.data.push({'systolic': state.systolic, 'diastolic': state.diastolic, 'pulse': state.pulse, 'ID':dataID});
-                                          console.log('App data state: ', appDataState);
+                                          objectStore.add({'systolic': state.systolic, 'diastolic': state.diastolic, 'pulse': state.pulse, 'ID':dataID});
+                                          console.log('App data state: ', state.data);
                                     }   
                               }
-                              request.onupgradeneeded = function(event) { 
+                              request.onupgradeneeded = (event) =>{ 
                                     var db = event.target.result;
                                     var objectStore = db.createObjectStore("health", { keyPath: "ID" });
                                     objectStore.transaction.oncomplete = (event) =>{
                                           var clientObjectStore = db.transaction("health", "readwrite").objectStore("health");
-                                          let dataID = Date.now();
                                           clientObjectStore.add({'systolic': state.systolic, 'diastolic': state.diastolic, 'pulse': state.pulse, 'ID':dataID});
-                                          appDataState.data.push({'systolic': state.systolic, 'diastolic': state.diastolic, 'pulse': state.pulse, 'ID':dataID})
-                                          console.log('App data state: ', appDataState);
+                                          let holder = state.data;
+                                          console.log('App data state: ', state.data);
                                     }
                               };
                               console.log(state.systolic, state.diastolic, state.pulse, Date.now());
-                              return initialState;
+                              let holder = [];
+                              holder = state.data;
+                              holder.push({systolic: state.systolic, diastolic: state.diastolic, pulse: state.pulse, ID:dataID})
+                              return {diastolic: '', systolic: '', pulse: '', container_display: '', show_container_button: 'none', data:holder};
                         }
                         
                   }
@@ -83,14 +89,14 @@ export const setInput = (state = initialState, action = {}) => {
       }
 }
 
-export const fetchData = (state = appDataState, action = {}) => {
-      switch(action.type){
-            case GET_USER_DATA:
-                  action.payload.forEach(val => appDataState.data.push(val));
-                  return appDataState.data;
-            case REQUEST_DATA:
-                  return appDataState.data;
-            default:
-                  return appDataState;
-      }
-}
+// export const fetchData = (state = appDataState, action = {}) => {
+//       switch(action.type){
+//             case GET_USER_DATA:
+//                   action.payload.forEach(val => appDataState.data.push(val));
+//                   return appDataState.data;
+//             case REQUEST_DATA:
+//                   return appDataState.data;
+//             default:
+//                   return appDataState;
+//       }
+// }

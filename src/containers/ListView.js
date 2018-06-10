@@ -28,8 +28,9 @@ const Container = glamorous('div', {propsAreCssOverrides: true})({
 
 const mInfo = [];
 const mapStateToProps = (state) => {
+      console.log('state value', state.setInput.data);
       return{
-            'data':state.fetchData
+            'data':state.setInput
       }
 }
  
@@ -43,15 +44,18 @@ class ListView extends Component{
       componentWillMount(){
         this.props.onGetUserData();
       }
-      
-      render(){
-            var info = this.props.data;
-            if(info.length>0){
-                  info.forEach(val => mInfo.push(val));
+      handleClick(e){
+            if(e.target.id.length>0){
+                  alert(e.target.id);
             }
+      }
+      render(){
+            let info=[];
+            info = this.props.data['data'];
+            console.log('mpropsss info',info);
             return(
                   <Container>
-                        {mInfo.map((val) =>  <InfoCard key={val['ID']} {...val}/>)}
+                        {this.props.data['data'].map((val) =>  <InfoCard key={val['ID']} id={val['ID']} {...val} onclick={this.handleClick.bind(this)}/>)}
                   </Container>
             )
 
