@@ -5,7 +5,8 @@ import {
       SHOW_HIDE_INPUT_CONTAINER,
       GET_USER_DATA,
       SHOW_HIDE_CONTAINER_CONTROL_BUTTON,
-      SAVE_USER_DATA
+      SAVE_USER_DATA,
+      REMOVE_ITEM
 } from './constants';
 export const enter_systolic = (text) =>({
       type: ENTER_SISTOLIC,
@@ -61,3 +62,8 @@ export const get_user_data = ()=>(dispatch) => {
       };
 
 }
+
+export const remove_item = (id)=>({
+      type: REMOVE_ITEM,
+      payload: id
+})

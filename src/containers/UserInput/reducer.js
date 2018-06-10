@@ -1,9 +1,18 @@
-import {ENTER_SISTOLIC, ENTER_DIASTOLIC, ENTER_PULSE, SHOW_HIDE_CONTAINER_CONTROL_BUTTON, GET_USER_DATA, SHOW_HIDE_INPUT_CONTAINER, SAVE_USER_DATA} from './constants';
+import {
+      ENTER_SISTOLIC,
+      ENTER_DIASTOLIC,
+      REMOVE_ITEM,
+      ENTER_PULSE,
+      SHOW_HIDE_CONTAINER_CONTROL_BUTTON,
+      GET_USER_DATA,
+      SHOW_HIDE_INPUT_CONTAINER,
+      SAVE_USER_DATA
+} from './constants';
 import Joi from 'joi';
 const schema = {
-      systolic:Joi.number().required(),
-      diastolic: Joi.number().required(),
-      pulse: Joi.number().required()
+      systolic:Joi.number().positive().min(40).max(250).required(),
+      diastolic: Joi.number().positive().min(40).max(250).required(),
+      pulse: Joi.number().positive().required()
 };
 
 const initialState = {
@@ -77,8 +86,15 @@ export const setInput = (state = initialState, action = {}) => {
                               holder.push({systolic: state.systolic, diastolic: state.diastolic, pulse: state.pulse, ID:dataID})
                               return {diastolic: '', systolic: '', pulse: '', container_display: '', show_container_button: 'none', data:holder};
                         }
-                        
                   }
+            case REMOVE_ITEM:
+                  console.log('ooooold data', state.data)
+                  console.log('Action payload',action.payload);
+                  var new_data = state.data.filter(val => (val.ID!==Number(action.payload)));
+                  console.log('removed data', new_data)
+                  return {...state, data:new_data};
+                
+                  
             default:
                   return state;
       }

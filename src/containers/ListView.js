@@ -1,7 +1,7 @@
 import glamorous from 'glamorous';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {get_user_data} from './UserInput/actions';
+import {get_user_data, remove_item} from './UserInput/actions';
 import InfoCard from '../components/InfoCard'
 
 
@@ -35,7 +35,8 @@ const mapStateToProps = (state) => {
  
 const mapDispatchToProps = (dispatch) => {
       return{
-            onGetUserData: ()=>dispatch(get_user_data())
+            onGetUserData: ()=>dispatch(get_user_data()),
+            onRemoveData: (id) => dispatch(remove_item(id))
       }
 }
 
@@ -45,8 +46,22 @@ class ListView extends Component{
       }
       handleClick(e){
             console.log(e.target)
-            alert(e.target.id);
+            var id = e.target.id;
             //Click color indicator to delete
+            var delete_item = window.confirm('Do you want to delete this record?');
+            if(delete_item){
+                  var db = null;
+                  var request = window.indexedDB.open("health", 1);
+                  request.onsuccess = () => {
+                        db = request.result;
+                        var transaction = db.transaction(["health"], "readwrite");
+                        var objectStore = transaction.objectStore("health");
+                        var objectStoreRequest = objectStore.delete(Number(id));
+                        objectStoreRequest.onsuccess = () => {
+                              this.props.onRemoveData(Number(id));
+                        }
+                  }
+            }
             
       }
       render(){

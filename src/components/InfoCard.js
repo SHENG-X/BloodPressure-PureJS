@@ -36,7 +36,11 @@ const InnerContainer = glamorous.div({
 });
 const getColor = (props)=>{
       var color;
-      if (props['systolic'] < 120 && props['diastolic'] < 80) {
+      if (props['systolic'] <= 90 && props['diastolic'] <= 60) {
+            console.log('low');
+            color = '#93deff';
+      }
+      else if (props['systolic'] < 120 && props['diastolic'] < 80) {
             //normal
             console.log('normall');
             color = '#8BC34A';
