@@ -1,8 +1,9 @@
 import glamorous from 'glamorous';
 import {css} from 'glamor'
 import React, {Component} from 'react';
-import {TextField, Button, withStyles, SvgIcon} from '@material-ui/core';
-
+import { SvgIcon} from '@material-ui/core';
+import { connect } from 'react-redux';
+import {enter_diastolic, enter_pulse, enter_systolic, show_hide_input_container, show_hide_container_control_button} from './actions';
 
 const Container = glamorous('div', {propsAreCssOverrides: true})({
       width:'100vw',
@@ -71,28 +72,53 @@ const InputContainer = glamorous.div({
       }
 
 });
+
+const mapStateToProps = (state) => {
+      return{
+            'systolic': state.systolic,
+            'diastolic':state.diastolic,
+            'pulse':state.pulse,
+            'container_display': state.container_display,
+            'show_container_button': state.show_container_button
+
+      }
+}
+ 
+const mapDispatchToProps = (dispatch) => {
+      return{
+            onSystolicChange: (event) => dispatch(enter_systolic(event.target.value)),
+            onDiastolicChange: (event) => dispatch(enter_diastolic(event.target.value)),
+            onPulseChange: (event) => dispatch(enter_pulse(event.target.value)),
+            onContainerControlClick: () => dispatch(show_hide_input_container()),
+            onButtonControlClick: () => dispatch(show_hide_container_control_button())
+      }
+}
+
+
+
+
+
 class UserInput extends Component{
-      constructor(props){
-            super(props);
-            this.state={
-                  container_display:'',
-                  show_container_button: 'none',
-            }
-      }
-      container_display_handler(){
-            this.setState({container_display:'none', show_container_button:''});
-      }
-      show_container_button(){
-            this.setState({show_container_button:'none', container_display:''});
-      }
+      // constructor(props){
+      //       super(props);
+      //       this.state={
+      //             container_display:'',
+      //             show_container_button: 'none',
+      //       }
+      // }
+      // container_display_handler(){
+      //       this.setState({container_display:'none', show_container_button:''});
+      // }
+      // show_container_button(){
+      //       this.setState({show_container_button:'none', container_display:''});
+      // }
       render(){
-            const { classes } = this.props;
             return(
                   <div>
-                  <Container display={this.state.container_display}>
+                  <Container display={this.props.container_display}>
                         <InnerContainer>
                               <form>
-                                    <InputContainer onClick={this.container_display_handler.bind(this)}>
+                                    <InputContainer onClick={this.props.onContainerControlClick}>
                                           <SvgIcon style={{width:'45px',height:'45px', opacity:'0.4'}}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                                       <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/>
@@ -101,22 +127,22 @@ class UserInput extends Component{
                                           </SvgIcon>
                                     </InputContainer>
                                     <InputContainer>
-                                          <input type='number' placeholder='systolic'/>
+                                          <input type='number' placeholder='systolic' onChange = {this.props.onSystolicChange}/>
                                     </InputContainer>
                                     <InputContainer>
-                                          <input type='number' placeholder='diastolic'/>
+                                          <input type='number' placeholder='diastolic' onChange = {this.props.onDiastolicChange}/>
                                     </InputContainer>
                                     <InputContainer>
-                                          <input type='number' placeholder='pulse'/>
+                                          <input type='number' placeholder='pulse' onChange = {this.props.onPulseChange}/>
                                     </InputContainer>
                                     <InputContainer>
-                                          <input type='button' value='SUBMIT'/>
+                                          <input type='button' value='SUBMIT' />
                                     </InputContainer>
                               </form>
                         </InnerContainer>
                   </Container>
                    <div style={{position:'fixed', bottom:'20px', textAlign:'center',left:'0px', width:'100%'}}>
-                              <SvgIcon onClick={this.show_container_button.bind(this)} style={{background:'#ccc', display:`${this.state.show_container_button}`, width:'45px', height:'45px', borderRadius:'50%',opacity:0.5}}>   
+                              <SvgIcon onClick={this.props.onButtonControlClick} style={{background:'#ccc', display:`${this.props.show_container_button}`, width:'45px', height:'45px', borderRadius:'50%',opacity:0.5}}>   
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                           <path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/>
                                           <path d="M0 0h24v24H0z" fill="none"/>
@@ -129,4 +155,4 @@ class UserInput extends Component{
 }
 
 
-export default UserInput;
+export default connect(mapStateToProps, mapDispatchToProps)(UserInput);
