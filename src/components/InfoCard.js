@@ -25,7 +25,7 @@ const FlexBox = glamorous.div({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      textAlign:'center'
+      textAlign:'center',
 
 });
 const InnerContainer = glamorous.div({

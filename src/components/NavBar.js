@@ -5,7 +5,7 @@ const NavBar = (props)=>{
       return(
             <AppBar position="static" color="default" style={{background:'#689F38', height:'56px'}}>
                   <Toolbar>
-                        <Typography variant="title" color="inherit" style={{color:'white'}}>
+                        <Typography variant="title" color="inherit" style={{color:'white', fontFamily: 'Roboto Condensed'}}>
                               BPNotebook
                         </Typography>
                   </Toolbar>
